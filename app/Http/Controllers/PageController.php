@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\View\View;
+
+class PageController extends Controller
+{
+    public function about(): View
+    {
+        return view('pages.about');
+    }
+
+    public function faq(): View
+    {
+        return view('pages.faq', ['faqs' => __('site.faqs')]);
+    }
+
+    public function guide(): View
+    {
+        return view('pages.guide');
+    }
+}
