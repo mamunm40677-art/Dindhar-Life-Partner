@@ -2,6 +2,7 @@
 
 return [
     'meta_description' => 'Find a life partner through faith, shared values, and mutual respect.',
+    'utility_note' => 'Thoughtful introductions rooted in family and mutual respect',
     'tagline' => 'Together on the path of faith',
     'navigation' => 'Main navigation', 'footer_navigation' => 'Footer navigation',
     'home' => 'Home', 'biodatas' => 'Biodatas', 'how_it_works' => 'How it works', 'about' => 'About us',
