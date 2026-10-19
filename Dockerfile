@@ -1,6 +1,15 @@
+# Stage 1: Build Frontend Assets
+FROM node:20-slim AS frontend
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Stage 2: PHP Application
 FROM php:8.3-apache
 
-# Install system dependencies & PHP extensions
+# Install required system packages for Laravel
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
@@ -9,36 +18,34 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    curl \
-    nodejs \
-    npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-install pdo_mysql gd zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite for Laravel
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Set working directory
+# Set Working Directory
 WORKDIR /var/www/html
 
-# Copy application code
+# Copy application files
 COPY . /var/www/html
 
-# Change Apache document root to public folder
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
+# Copy compiled frontend assets from frontend stage
+COPY --from=frontend /app/public/build /var/www/html/public/build
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Configure Apache Document Root to public/
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
+
+# Install Composer dependencies
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# Install NPM dependencies and build assets
-RUN npm install && npm run build
-
-# Set permissions for Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Set Permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 80
 
