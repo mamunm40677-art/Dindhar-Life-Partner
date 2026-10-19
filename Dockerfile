@@ -37,6 +37,10 @@ COPY --from=frontend /app/public/build /var/www/html/public/build
 
 # Configure Apache Document Root to public/
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+ENV APP_ENV=production
+ENV APP_DEBUG=true
+ENV APP_KEY="base64:d1R1T2lsSVRrbWRtZXBrS0FwSWZzUFBvM2E4TWN6Wmc="
+ENV DB_CONNECTION=sqlite
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
 
