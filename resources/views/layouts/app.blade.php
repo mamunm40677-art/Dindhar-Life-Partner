@@ -263,6 +263,9 @@
                     <span class="badge-count">0</span>
                 </div>
                 @auth
+                    @if(auth()->user()->isAdmin())
+                        <a class="btn-pill btn-pill-gold" href="{{ route('admin.dashboard') }}">এডমিন প্যানেল</a>
+                    @endif
                     <a class="btn-pill btn-pill-outline" href="{{ route('dashboard') }}">{{ __('site.dashboard') }}</a>
                 @else
                     <a class="btn-pill btn-pill-outline" href="{{ route('login') }}">লগইন</a>
@@ -286,6 +289,9 @@
             </div>
             <div class="mobile-actions">
                 @auth
+                    @if(auth()->user()->isAdmin())
+                        <a class="btn-pill btn-pill-gold" style="width:100%;margin-bottom:8px" href="{{ route('admin.dashboard') }}">এডমিন প্যানেল</a>
+                    @endif
                     <a class="btn-pill btn-pill-outline" style="width:100%" href="{{ route('dashboard') }}">{{ __('site.dashboard') }}</a>
                 @else
                     <a class="btn-pill btn-pill-outline" style="width:50%" href="{{ route('login') }}">লগইন</a>
