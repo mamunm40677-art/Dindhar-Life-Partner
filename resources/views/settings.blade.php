@@ -259,6 +259,21 @@
 
         <!-- Logout Card -->
         <div class="settings-card">
+            <div class="settings-card-title" style="color: #dc2626;">🚨 সম্পূর্ণ অ্যাকাউন্ট মুছে ফেলুন</div>
+            <p style="font-size: 13px; color: #69766f; margin-bottom: 16px;">
+                আপনি যদি আপনার সম্পূর্ণ অ্যাকাউন্ট স্থায়ীভাবে মুছে ফেলতে চান, তবে নিচের বাটনে ক্লিক করুন। এতে আপনার বায়োডাটা ও অ্যাকাউন্টের সকল তথ্য স্থায়ীভাবে ডিলিট হয়ে যাবে।
+            </p>
+
+            <form action="{{ route('settings.account.delete') }}" method="POST" onsubmit="return confirm('আপনি কি নিশ্চিত যে আপনার সম্পূর্ণ অ্যাকাউন্ট স্থায়ীভাবে মুছে ফেলতে চান? এই অ্যাকশন বাতিল করা যাবে না!')">
+                @csrf
+                <button type="submit" class="btn-danger-full" style="background: #991b1b;">
+                    আমার সম্পূর্ণ অ্যাকাউন্ট স্থায়ীভাবে ডিলিট করুন
+                </button>
+            </form>
+        </div>
+
+        <!-- Logout Card -->
+        <div class="settings-card">
             <div class="settings-card-title">🚪 লগআউট</div>
             <p style="font-size: 13px; color: #69766f; margin-bottom: 16px;">
                 আপনার অ্যাকাউন্ট থেকে লগআউট করতে নিচের বাটনে ক্লিক করুন।

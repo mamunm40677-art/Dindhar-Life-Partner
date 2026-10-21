@@ -239,48 +239,28 @@
             </div>
 
             <div class="pricing-grid">
-                <div class="price-card">
-                    <span class="badge free">ফ্রি ট্রায়াল</span>
-                    <h3>বেসিক বায়োডাটা</h3>
-                    <p class="subtitle">বায়োডাটা জমা দেওয়ার জন্য</p>
-                    <div class="price">৳ ০ <span>/ আজীবন ফ্রি</span></div>
-                    <ul class="plan-features">
-                        <li>✓ ১০০% ফ্রি বায়োডাটা রেজিস্ট্রেশন</li>
-                        <li>✓ বায়োডাটা পাবলিকলি প্রদর্শন সুবিধা</li>
-                        <li>✓ আনলিমিটেড সার্চ ও ফিল্টার</li>
-                        <li>✕ অভিভাবকের সরাসরি ফোন নম্বর</li>
-                    </ul>
-                    <a href="{{ route('register') }}" class="button secondary-full">বিনামূল্যে বায়োডাটা খুলুন</a>
-                </div>
-
-                <div class="price-card popular">
-                    <span class="badge featured">সবচেয়ে জনপ্রিয়</span>
-                    <span class="badge silver">সিলভার প্রিমিয়াম</span>
-                    <h3>স্ট্যান্ডার্ড সংযোগ</h3>
-                    <p class="subtitle">অভিভাবকের নম্বর নেওয়ার জন্য</p>
-                    <div class="price">৳ ১,২০০ <span>/ ৩টি অভিভাবকের নম্বর</span></div>
-                    <ul class="plan-features">
-                        <li>✓ ৩টি বায়োডাটার অভিভাবকের সরাসরি নম্বর</li>
-                        <li>✓ ৫০০ দিন মেয়াদ</li>
-                        <li>✓ এসএমএস ও ইমেইল এলার্ট</li>
-                        <li>✓ নিবেদিত সাপোর্ট ম্যানেজার</li>
-                    </ul>
-                    <a href="{{ route('contact') }}" class="button primary-full">প্যাকেজ সাবস্ক্রাইব করুন</a>
-                </div>
-
-                <div class="price-card">
-                    <span class="badge gold">ভিআইপি সার্ভিস</span>
-                    <h3>গোল্ড প্রিমিয়াম</h3>
-                    <p class="subtitle">বিশেষ অগ্রাধিকার সুবিধার জন্য</p>
-                    <div class="price">৳ ২,৫০০ <span>/ ৭টি অভিভাবকের নম্বর</span></div>
-                    <ul class="plan-features">
-                        <li>✓ ৭টি বায়োডাটার অভিভাবক নম্বর</li>
-                        <li>✓ যেকোনো বায়োডাটা ফাস্ট প্রায়োরিটি সুবিধা</li>
-                        <li>✓ সরাসরি বিবাহ কনসালট্যান্সি সহায়তা</li>
-                        <li>✓ সর্বোচ্চ সহায়তা ও সাপোর্ট</li>
-                    </ul>
-                    <a href="{{ route('contact') }}" class="button primary-full">প্যাকেজ সাবস্ক্রাইব করুন</a>
-                </div>
+                @forelse($plans as $plan)
+                    <div class="price-card {{ $plan->is_popular ? 'popular' : '' }}">
+                        @if($plan->badge)
+                            <span class="badge {{ $plan->is_popular ? 'featured' : 'free' }}">{{ $plan->badge }}</span>
+                        @endif
+                        <h3>{{ $plan->name }}</h3>
+                        @if($plan->subtitle)
+                            <p class="subtitle">{{ $plan->subtitle }}</p>
+                        @endif
+                        <div class="price">৳ {{ number_format($plan->price) }} <span>{{ $plan->period }}</span></div>
+                        <ul class="plan-features">
+                            @if(is_array($plan->features))
+                                @foreach($plan->features as $feature)
+                                    <li>✓ {{ $feature }}</li>
+                                @endforeach
+                            @endif
+                        </ul>
+                        <a href="{{ $plan->button_link }}" class="button {{ $plan->is_popular ? 'primary-full' : 'secondary-full' }}">{{ $plan->button_text }}</a>
+                    </div>
+                @empty
+                    <div style="grid-column:1/-1;text-align:center;color:#64748b">কোনো সক্রিয় সাবস্ক্রিপশন প্ল্যান পাওয়া যায়নি।</div>
+                @endforelse
             </div>
         </div>
     </section>

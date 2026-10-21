@@ -49,14 +49,16 @@
                         <td>
                             <div style="display:flex;gap:6px">
                                 @if(auth()->id() !== $user->id)
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn-action btn-action-primary">এডিট</a>
+
                                     <form action="{{ route('admin.users.toggle-admin', $user) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn-action {{ $user->isAdmin() ? 'btn-action-warning' : 'btn-action-primary' }}">
+                                        <button type="submit" class="btn-action {{ $user->isAdmin() ? 'btn-action-warning' : 'btn-action-success' }}">
                                             {{ $user->isAdmin() ? 'ইউজার বানান' : 'এডমিন বানান' }}
                                         </button>
                                     </form>
 
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('আপনি কি নিশ্চিত যে এই ইউজারকে মুছে ফেলতে চান?')">
+                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('আপনি কি নিশ্চিত যে এই ইউজার এবং তার সকল তথ্য স্থায়ীভাবে মুছে ফেলতে চান?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-action btn-action-danger">ডিলিট</button>

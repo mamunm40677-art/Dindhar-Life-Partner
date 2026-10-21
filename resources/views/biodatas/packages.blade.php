@@ -93,46 +93,26 @@
 </div>
 
 <div class="packages-grid">
-    <!-- Package 1 -->
-    <div class="pkg-card">
-        <span class="badge">ফ্রি ট্রায়াল</span>
-        <div class="pkg-title">ফ্রি প্যাকেজ</div>
-        <div class="pkg-price">৳০ <span>/ ফ্রি</span></div>
-        <ul class="pkg-features">
-            <li>✓ ১টি বায়োডাটা তৈরি</li>
-            <li>✓ সরাসরি পাবলিক প্রোফাইল প্রকাশ</li>
-            <li>✓ আনলিমিটেড বায়োডাটা ব্রাউজিং</li>
-            <li>✓ বেসিক কন্টাক্ট সাপোর্ট</li>
-        </ul>
-        <a href="{{ route('dashboard') }}" class="btn-buy">বর্তমান প্যাকেজ</a>
-    </div>
-
-    <!-- Package 2 -->
-    <div class="pkg-card popular">
-        <span class="badge" style="background: #062820; color: #cba135; border: 1px solid #cba135;">জনপ্রিয়</span>
-        <div class="pkg-title">স্ট্যান্ডার্ড প্যাকেজ</div>
-        <div class="pkg-price">৳৪৯০ <span>/ ৫ কানেকশন</span></div>
-        <ul class="pkg-features">
-            <li>✓ ৫ জন অভিভাবকের সাথে সরাসরি যোগাযোগ</li>
-            <li>✓ মিউচুয়াল ম্যাচ সুবিধা</li>
-            <li>✓ পছন্দ অনুযায়ী রিয়েল-টাইম অটো নোটিফিকেশন</li>
-            <li>✓ নিবেদিত হেল্পলাইন সাপোর্ট</li>
-        </ul>
-        <a href="{{ route('contact') }}" class="btn-buy">প্যাকেজ সাবস্ক্রাইব করুন</a>
-    </div>
-
-    <!-- Package 3 -->
-    <div class="pkg-card">
-        <span class="badge">প্রিমিয়াম</span>
-        <div class="pkg-title">প্রিমিয়াম প্যাকেজ</div>
-        <div class="pkg-price">৳৯৯০ <span>/ ১২ কানেকশন</span></div>
-        <ul class="pkg-features">
-            <li>✓ ১২ জন অভিভাবকের সরাসরি যোগাযোগ তথ্য</li>
-            <li>✓ টপ লিস্টে বায়োডাটা হাইলাইট করার সুযোগ</li>
-            <li>✓ প্রিমিয়াম কাস্টমার কেয়ার সার্ভিস</li>
-            <li>✓ সম্পূর্ণ ভেরিফাইড ইউজার সংযোগ</li>
-        </ul>
-        <a href="{{ route('contact') }}" class="btn-buy">প্যাকেজ সাবস্ক্রাইব করুন</a>
-    </div>
+    @forelse($plans as $plan)
+        <div class="pkg-card {{ $plan->is_popular ? 'popular' : '' }}">
+            @if($plan->badge)
+                <span class="badge" @if($plan->is_popular) style="background: #062820; color: #cba135; border: 1px solid #cba135;" @endif>{{ $plan->badge }}</span>
+            @endif
+            <div class="pkg-title">{{ $plan->name }}</div>
+            <div class="pkg-price">৳{{ number_format($plan->price) }} <span>{{ $plan->period }}</span></div>
+            <ul class="pkg-features">
+                @if(is_array($plan->features))
+                    @foreach($plan->features as $feature)
+                        <li>✓ {{ $feature }}</li>
+                    @endforeach
+                @endif
+            </ul>
+            <a href="{{ $plan->button_link }}" class="btn-buy">{{ $plan->button_text }}</a>
+        </div>
+    @empty
+        <div style="grid-column: 1/-1; text-align: center; color: #69766f; padding: 30px;">
+            কোনো সক্রিয় প্যাকেজ পাওয়া যায়নি।
+        </div>
+    @endforelse
 </div>
 @endsection

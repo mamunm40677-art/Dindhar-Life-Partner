@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -57,5 +58,23 @@ class SettingsController extends Controller
         }
 
         return back()->with('error', 'আপনার কোনো অ্যাক্টিভ বায়োডাটা নেই।');
+    }
+
+    public function deleteAccount(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        Auth::logout();
+
+        if ($user->biodata) {
+            $user->biodata->delete();
+        }
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home')->with('status', 'আপনার অ্যাকাউন্টটি সফলভাবে স্থায়ীভাবে মুছে ফেলা হয়েছে।');
     }
 }

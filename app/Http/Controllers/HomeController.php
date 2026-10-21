@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biodata;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,6 +23,8 @@ class HomeController extends Controller
         $groomsCount = Biodata::where('published', true)->where('gender', 'groom')->count();
         $bridesCount = Biodata::where('published', true)->where('gender', 'bride')->count();
 
-        return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount'));
+        $plans = Plan::where('is_active', true)->orderBy('sort_order')->get();
+
+        return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans'));
     }
 }
