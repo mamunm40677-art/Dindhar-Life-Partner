@@ -197,11 +197,11 @@
 
                     <!-- 5. আমার বায়োডাটা -->
                     @if ($myBiodata)
-                        <a href="{{ route('biodatas.show', $myBiodata) }}" class="dash-nav-item {{ request()->routeIs('biodatas.show') && request()->route('biodata')->id == $myBiodata->id ? 'active' : '' }}">
+                        <a href="{{ route('biodatas.show', $myBiodata) }}" class="dash-nav-item {{ request()->routeIs('biodatas.show') ? 'active' : '' }}">
                             <span class="nav-label"><span class="icon">👁️</span> আমার বায়োডাটা</span>
                         </a>
                     @else
-                        <a href="{{ route('my-biodata.create') }}" class="dash-nav-item {{ request()->routeIs('my-biodata.create') ? 'active' : '' }}">
+                        <a href="{{ route('my-biodata.create') }}" class="dash-nav-item">
                             <span class="nav-label"><span class="icon">👁️</span> আমার বায়োডাটা</span>
                         </a>
                     @endif
