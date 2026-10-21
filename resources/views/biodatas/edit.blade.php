@@ -1,11 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.dashboard-layout')
 
 @section('title', __('site.edit_profile').' | '.config('app.name'))
 
-@section('content')
-    <section class="container page-head"><span class="eyebrow">{{ __('site.dashboard') }}</span><h1>{{ __('site.edit_profile') }}</h1><p>{{ __('site.profile_form_copy') }}</p></section>
-    <section class="container section" style="padding-top:0"><div style="max-width:820px">
-        @include('biodatas._form')
-        <form method="post" action="{{ route('my-biodata.destroy', $biodata) }}" onsubmit="return confirm(@js(__('site.confirm_delete')))">@csrf @method('DELETE')<button class="button secondary" type="submit" style="margin-top:14px;color:#813f37">{{ __('site.delete_profile') }}</button></form>
-    </div></section>
+@section('dash-content')
+    <div style="background: #ffffff; border: 1.5px solid #e5e0d3; border-radius: 16px; padding: 24px 28px; box-shadow: 0 4px 15px rgba(6, 40, 32, 0.03); margin-bottom: 24px;">
+        <span style="color: #cba135; font-size: 12px; font-weight: 700; text-transform: uppercase;">{{ __('site.dashboard') }}</span>
+        <h1 style="font-family: var(--serif); font-size: 24px; font-weight: 700; color: #062820; margin: 4px 0 6px;">{{ __('site.edit_profile') }}</h1>
+        <p style="font-size: 13px; color: #69766f; margin: 0;">{{ __('site.profile_form_copy') }}</p>
+    </div>
+
+    @include('biodatas._form')
+
+    <div style="margin-top: 24px; text-align: right;">
+        <form method="post" action="{{ route('my-biodata.destroy', $biodata) }}" onsubmit="return confirm(@js(__('site.confirm_delete')))">
+            @csrf
+            @method('DELETE')
+            <button type="submit" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; padding: 8px 18px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                🗑️ {{ __('site.delete_profile') }}
+            </button>
+        </form>
+    </div>
 @endsection

@@ -12,19 +12,32 @@
         padding: 30px;
         box-shadow: 0 4px 20px rgba(6, 40, 32, 0.03);
         margin-bottom: 24px;
-        text-align: center;
+        position: relative;
+    }
+
+    .gender-pill-tag {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #e6f4ea;
+        color: #137333;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid #b7e1cd;
     }
 
     .view-avatar-circle {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         border-radius: 50%;
         background: #062820;
         border: 3px solid #cba135;
         color: #cba135;
         display: grid;
         place-items: center;
-        font-size: 36px;
+        font-size: 40px;
         margin: 0 auto 12px;
         box-shadow: 0 4px 12px rgba(6, 40, 32, 0.15);
     }
@@ -34,33 +47,40 @@
         font-size: 26px;
         font-weight: 700;
         color: #062820;
-        margin: 0 0 6px;
-    }
-
-    .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 12px;
-        margin: 24px 0;
-    }
-
-    .summary-box {
-        background: #fcfbf8;
-        border: 1px solid #e5e0d3;
-        padding: 12px;
-        border-radius: 10px;
+        margin: 0 0 16px;
         text-align: center;
     }
 
-    .summary-box .lbl {
+    /* 2 columns x 3 rows summary grid */
+    .summary-grid-2x3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 20px 0 24px;
+    }
+
+    .summary-box-item {
+        background: #fcfbf8;
+        border: 1px solid #e5e0d3;
+        padding: 12px 16px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .summary-box-item .icon {
+        font-size: 20px;
+    }
+
+    .summary-box-item .lbl {
         font-size: 11px;
         color: #69766f;
         font-weight: 600;
-        margin-bottom: 4px;
     }
 
-    .summary-box .val {
-        font-size: 14px;
+    .summary-box-item .val {
+        font-size: 13px;
         font-weight: 700;
         color: #062820;
     }
@@ -144,8 +164,9 @@
         background: #ffffff;
         border: 1.5px solid #e5e0d3;
         border-radius: 16px;
-        padding: 30px;
+        padding: 40px 30px;
         box-shadow: 0 4px 20px rgba(6, 40, 32, 0.03);
+        text-align: center;
     }
 
     .tab-pane {
@@ -156,74 +177,91 @@
         display: block;
     }
 
-    .tab-pane h2 {
-        font-family: var(--serif);
-        font-size: 20px;
-        font-weight: 700;
-        color: #062820;
-        margin: 0 0 16px;
-        padding-bottom: 10px;
-        border-bottom: 1.5px solid #e5e0d3;
-    }
-
-    .info-list-rows {
-        display: grid;
-        gap: 14px;
-    }
-
-    .info-row-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 16px;
-        background: #fcfbf8;
-        border-radius: 8px;
-        border: 1px solid #e5e0d3;
+    .btn-fill-info {
+        display: inline-block;
+        padding: 12px 32px;
+        background: #062820;
+        color: #cba135;
+        border: 1.5px solid #cba135;
+        border-radius: 30px;
         font-size: 14px;
-    }
-
-    .info-row-item .title {
-        font-weight: 600;
-        color: #69766f;
-    }
-
-    .info-row-item .value {
         font-weight: 700;
-        color: #062820;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-fill-info:hover {
+        background: #0d493a;
+        color: #ffffff;
+    }
+
+    @media (max-width: 650px) {
+        .summary-grid-2x3 {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 
 <!-- Profile Header Card -->
 <div class="view-header-card">
+    <span class="gender-pill-tag">
+        {{ $biodata->gender === 'groom' || $biodata->gender === 'male' ? 'পাত্র' : 'পাত্রী' }}
+    </span>
+
     <div class="view-avatar-circle">
         {{ $biodata->gender === 'groom' || $biodata->gender === 'male' ? '🧔' : '🧕' }}
     </div>
-    <div class="view-bio-no">Bio No - {{ $biodata->id }}</div>
-    <h2 style="font-family: var(--serif); font-size: 20px; color: #062820; margin: 0 0 6px;">{{ $biodata->display_name }}</h2>
 
-    <div class="summary-grid">
-        <div class="summary-box">
-            <div class="lbl">জন্মসাল / বয়স</div>
-            <div class="val">{{ $biodata->age }} বছর</div>
+    <div class="view-bio-no">Bio No - {{ $biodata->id }}</div>
+
+    <!-- 2x3 Grid -->
+    <div class="summary-grid-2x3">
+        <div class="summary-box-item">
+            <span class="icon">📅</span>
+            <div>
+                <div class="lbl">জন্মসাল / বয়স</div>
+                <div class="val">{{ $biodata->age }} বছর</div>
+            </div>
         </div>
-        <div class="summary-box">
-            <div class="lbl">বৈবাহিক অবস্থা</div>
-            <div class="val">{{ $biodata->marital_status }}</div>
+
+        <div class="summary-box-item">
+            <span class="icon">💍</span>
+            <div>
+                <div class="lbl">বৈবাহিক অবস্থা</div>
+                <div class="val">{{ $biodata->marital_status ?? 'N/A' }}</div>
+            </div>
         </div>
-        <div class="summary-box">
-            <div class="lbl">উচ্চতা</div>
-            <div class="val">৫ ফিট ৪ ইঞ্চি</div>
+
+        <div class="summary-box-item">
+            <span class="icon">📏</span>
+            <div>
+                <div class="lbl">উচ্চতা</div>
+                <div class="val">৫ ফিট ৪ ইঞ্চি</div>
+            </div>
         </div>
-        <div class="summary-box">
-            <div class="lbl">গায়ের বর্ণ</div>
-            <div class="val">উজ্জ্বল শ্যামলা</div>
+
+        <div class="summary-box-item">
+            <span class="icon">🎨</span>
+            <div>
+                <div class="lbl">গায়ের বর্ণ</div>
+                <div class="val">উজ্জ্বল শ্যামলা</div>
+            </div>
         </div>
-        <div class="summary-box">
-            <div class="lbl">পেশা</div>
-            <div class="val">{{ $biodata->occupation }}</div>
+
+        <div class="summary-box-item">
+            <span class="icon">💼</span>
+            <div>
+                <div class="lbl">পেশা</div>
+                <div class="val">{{ $biodata->occupation ?? 'N/A' }}</div>
+            </div>
         </div>
-        <div class="summary-box">
-            <div class="lbl">ঠিকানা</div>
-            <div class="val">{{ $biodata->city }}</div>
+
+        <div class="summary-box-item">
+            <span class="icon">📍</span>
+            <div>
+                <div class="lbl">ঠিকানা</div>
+                <div class="val">{{ $biodata->city ?? 'N/A' }}</div>
+            </div>
         </div>
     </div>
 
@@ -256,90 +294,72 @@
 <div class="view-body-card">
     <!-- Tab 1: General Info -->
     <div class="tab-pane active" id="view-pane-1">
-        <h2>১. সাধারণ তথ্য</h2>
-        <div class="info-list-rows">
-            <div class="info-row-item">
-                <span class="title">ডিসপ্লে নাম</span>
-                <span class="value">{{ $biodata->display_name }}</span>
-            </div>
-            <div class="info-row-item">
-                <span class="title">বায়োডাটার ধরন</span>
-                <span class="value">{{ $biodata->gender === 'groom' || $biodata->gender === 'male' ? 'পাত্রের বায়োডাটা' : 'পাত্রীর বায়োডাটা' }}</span>
-            </div>
-            <div class="info-row-item">
-                <span class="title">বয়স</span>
-                <span class="value">{{ $biodata->age }} বছর</span>
-            </div>
-            <div class="info-row-item">
-                <span class="title">বৈবাহিক অবস্থা</span>
-                <span class="value">{{ $biodata->marital_status }}</span>
-            </div>
-            <div class="info-row-item">
-                <span class="title">জেলা / অবস্থান</span>
-                <span class="value">{{ $biodata->city }}</span>
-            </div>
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            ডিসপ্লে নাম: <strong>{{ $biodata->display_name }}</strong> | বয়স: <strong>{{ $biodata->age }} বছর</strong>
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 
     <!-- Tab 2: About -->
     <div class="tab-pane" id="view-pane-2">
-        <h2>২. নিজের সম্পর্কে</h2>
-        <div style="background: #fcfbf8; padding: 20px; border-radius: 10px; border: 1px solid #e5e0d3; font-size: 14px; line-height: 1.8; color: #15382f;">
-            {{ $biodata->about }}
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            {{ $biodata->about ?? 'এখনো পর্যন্ত আপনি এই তথ্য পূরণ করেন নি।' }}
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 
     <!-- Tab 3: Family -->
     <div class="tab-pane" id="view-pane-3">
-        <h2>৩. পারিবারিক তথ্য</h2>
-        <div class="info-list-rows">
-            <div class="info-row-item">
-                <span class="title">পারিবারিক জেলা</span>
-                <span class="value">{{ $biodata->city }}</span>
-            </div>
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            এখনো পর্যন্ত আপনি এই তথ্য পূরণ করেন নি।
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 
     <!-- Tab 4: Education & Career -->
     <div class="tab-pane" id="view-pane-4">
-        <h2>৪. শিক্ষা ও পেশা</h2>
-        <div class="info-list-rows">
-            <div class="info-row-item">
-                <span class="title">শিক্ষাগত যোগ্যতা</span>
-                <span class="value">{{ $biodata->education }}</span>
-            </div>
-            <div class="info-row-item">
-                <span class="title">বর্তমান পেশা</span>
-                <span class="value">{{ $biodata->occupation }}</span>
-            </div>
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            শিক্ষা: <strong>{{ $biodata->education }}</strong> | পেশা: <strong>{{ $biodata->occupation }}</strong>
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 
     <!-- Tab 5: Religious -->
     <div class="tab-pane" id="view-pane-5">
-        <h2>৫. দ্বীনি তথ্য</h2>
-        <div style="background: #fcfbf8; padding: 20px; border-radius: 10px; border: 1px solid #e5e0d3; font-size: 14px; line-height: 1.8; color: #15382f;">
-            পাঁচ ওয়াক্ত সালাত পাবন্দির সাথে আদায় করা হয় এবং ইসলামিক অনুশাসন মানার চেষ্টা রয়েছে আলহামদুলিল্লাহ।
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            এখনো পর্যন্ত আপনি এই তথ্য পূরণ করেন নি।
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 
     <!-- Tab 6: Marital -->
     <div class="tab-pane" id="view-pane-6">
-        <h2>৬. বৈবাহিক তথ্য</h2>
-        <div class="info-list-rows">
-            <div class="info-row-item">
-                <span class="title">অভিভাবকের সম্মতি</span>
-                <span class="value">অভিভাবক সম্পূর্ণরূপে অবগত ও সম্মত আছেন।</span>
-            </div>
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            এখনো পর্যন্ত আপনি এই তথ্য পূরণ করেন নি।
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 
     <!-- Tab 7: Expected Partner -->
     <div class="tab-pane" id="view-pane-7">
-        <h2>৭. কাঙ্ক্ষিত জীবনসঙ্গী</h2>
-        <div style="background: #fcfbf8; padding: 20px; border-radius: 10px; border: 1px solid #e5e0d3; font-size: 14px; line-height: 1.8; color: #15382f;">
-            দ্বীনদার, চরিত্রবান ও নামাযী জীবনসঙ্গী প্রত্যাশা করা হচ্ছে।
-        </div>
+        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+            এখনো পর্যন্ত আপনি এই তথ্য পূরণ করেন নি।
+        </p>
+        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+            তথ্য পূরণ করি
+        </a>
     </div>
 </div>
 
