@@ -101,7 +101,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 14px;
+        padding: 11px 14px;
         border-radius: 10px;
         font-size: 13px;
         font-weight: 700;
@@ -118,7 +118,7 @@
     .dash-nav-item .nav-label {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
     }
 
     .dash-badge-new {
@@ -126,8 +126,8 @@
         color: var(--dash-green);
         font-size: 10px;
         font-weight: 700;
-        padding: 2px 6px;
-        border-radius: 10px;
+        padding: 2px 7px;
+        border-radius: 12px;
     }
 
     .dash-main {
@@ -172,70 +172,86 @@
                 </div>
 
                 <nav class="dash-nav">
+                    <!-- 1. ড্যাশবোর্ড -->
                     <a href="{{ route('dashboard') }}" class="dash-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">📊</span> ড্যাশবোর্ড</span>
                     </a>
 
+                    <!-- 2. মিউচুয়াল ম্যাচ বায়োডাটা -->
                     <a href="{{ route('mutual-matches') }}" class="dash-nav-item {{ request()->routeIs('mutual-matches') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">🤝</span> মিউচুয়াল ম্যাচ বায়োডাটা</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
+                    <!-- 3. পছন্দ অনুযায়ী মিল -->
                     <a href="{{ route('preference-matches') }}" class="dash-nav-item {{ request()->routeIs('preference-matches') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">✨</span> পছন্দ অনুযায়ী মিল</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
+                    <!-- 4. অনলাইন ইউজার -->
                     <a href="{{ route('online-users') }}" class="dash-nav-item {{ request()->routeIs('online-users') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">📡</span> অনলাইন ইউজার</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
-                    <a href="{{ route('biodatas.index') }}" class="dash-nav-item {{ request()->routeIs('biodatas.index') ? 'active' : '' }}">
-                        <span class="nav-label"><span class="icon">🔍</span> বায়োডাটা ব্রাউজ করুন</span>
-                    </a>
-
+                    <!-- 5. আমার বায়োডাটা -->
                     @if ($myBiodata)
                         <a href="{{ route('biodatas.show', $myBiodata) }}" class="dash-nav-item {{ request()->routeIs('biodatas.show') && request()->route('biodata')->id == $myBiodata->id ? 'active' : '' }}">
                             <span class="nav-label"><span class="icon">👁️</span> আমার বায়োডাটা</span>
                         </a>
+                    @else
+                        <a href="{{ route('my-biodata.create') }}" class="dash-nav-item {{ request()->routeIs('my-biodata.create') ? 'active' : '' }}">
+                            <span class="nav-label"><span class="icon">👁️</span> আমার বায়োডাটা</span>
+                        </a>
+                    @endif
+
+                    <!-- 6. এডিট বায়োডাটা -->
+                    @if ($myBiodata)
                         <a href="{{ route('my-biodata.edit', $myBiodata) }}" class="dash-nav-item {{ request()->routeIs('my-biodata.edit') ? 'active' : '' }}">
                             <span class="nav-label"><span class="icon">✎</span> এডিট বায়োডাটা</span>
                         </a>
                     @else
                         <a href="{{ route('my-biodata.create') }}" class="dash-nav-item {{ request()->routeIs('my-biodata.create') ? 'active' : '' }}">
-                            <span class="nav-label"><span class="icon">＋</span> নতুন বায়োডাটা তৈরি করুন</span>
+                            <span class="nav-label"><span class="icon">✎</span> এডিট বায়োডাটা</span>
                         </a>
                     @endif
 
+                    <!-- 7. যোগাযোগ তথ্য -->
                     <a href="{{ route('unlocked-contacts') }}" class="dash-nav-item {{ request()->routeIs('unlocked-contacts') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">📞</span> যোগাযোগ তথ্য</span>
                     </a>
 
+                    <!-- 8. কারা রিকোয়েস্ট করেছে -->
                     <a href="{{ route('incoming-requests') }}" class="dash-nav-item {{ request()->routeIs('incoming-requests') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">👍</span> কারা রিকোয়েস্ট করেছে</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
+                    <!-- 9. কারা পছন্দে যুক্ত রেখেছে -->
                     <a href="{{ route('shortlisted-by') }}" class="dash-nav-item {{ request()->routeIs('shortlisted-by') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">❤️</span> কারা পছন্দে যুক্ত রেখেছে</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
+                    <!-- 10. কারা প্রোফাইল দেখেছে -->
                     <a href="{{ route('profile-visitors') }}" class="dash-nav-item {{ request()->routeIs('profile-visitors') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">👁️‍🗨️</span> কারা প্রোফাইল দেখেছে</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
+                    <!-- 11. ইগনোর তালিকা -->
                     <a href="{{ route('ignored-list') }}" class="dash-nav-item {{ request()->routeIs('ignored-list') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">🚫</span> ইগনোর তালিকা</span>
                         <span class="dash-badge-new">New</span>
                     </a>
 
+                    <!-- 12. প্যাকেজ কিনুন -->
                     <a href="{{ route('packages') }}" class="dash-nav-item {{ request()->routeIs('packages') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">💎</span> প্যাকেজ কিনুন</span>
                     </a>
 
+                    <!-- 13. সেটিংস -->
                     <a href="{{ route('settings') }}" class="dash-nav-item {{ request()->routeIs('settings') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">⚙️</span> সেটিংস</span>
                     </a>
