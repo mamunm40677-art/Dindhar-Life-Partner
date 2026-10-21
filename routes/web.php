@@ -29,6 +29,8 @@ Route::get('/register', [AuthController::class, 'registerForm'])->middleware('gu
 Route::post('/register', [AuthController::class, 'register'])->middleware('guest')->name('register.store');
 Route::get('/login', [AuthController::class, 'loginForm'])->middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login'])->middleware(['guest', 'throttle:5,1'])->name('login.store');
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->middleware('guest')->name('google.login');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->middleware('guest')->name('google.callback');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::middleware('auth')->group(function () {

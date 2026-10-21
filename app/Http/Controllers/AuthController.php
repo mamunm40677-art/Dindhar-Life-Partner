@@ -8,8 +8,11 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -43,6 +46,34 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard'));
+    }
+
+    public function redirectToGoogle(): RedirectResponse
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback(): RedirectResponse
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+
+            $user = User::firstOrCreate(
+                ['email' => $googleUser->getEmail()],
+                [
+                    'name' => $googleUser->getName() ?? 'Google User',
+                    'password' => Hash::make(Str::random(24)),
+                    'email_verified_at' => now(),
+                ]
+            );
+
+            Auth::login($user, true);
+            request()->session()->regenerate();
+
+            return redirect()->intended(route('dashboard'));
+        } catch (\Exception $e) {
+            return redirect()->route('login')->with('error', 'Google এর মাধ্যমে লগইন করা সম্ভব হয়নি। আবার চেষ্টা করুন।');
+        }
     }
 
     public function logout(Request $request): RedirectResponse
