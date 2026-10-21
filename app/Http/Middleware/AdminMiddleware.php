@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (! $request->user() || ! $request->user()->isAdmin()) {
-            abort(403, 'Unauthorized access to admin panel.');
+            return redirect()->route('home')->with('error', 'আপনার এডমিন প্যানেলে প্রবেশের অনুমতি নেই।');
         }
 
         return $next($request);
