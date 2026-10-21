@@ -38,9 +38,12 @@ COPY --from=frontend /app/public/build /var/www/html/public/build
 # Configure Apache Document Root to public/
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 ENV APP_ENV=production
-ENV APP_DEBUG=true
+ENV APP_DEBUG=false
 ENV APP_KEY="base64:d1R1T2lsSVRrbWRtZXBrS0FwSWZzUFBvM2E4TWN6Wmc="
 ENV DB_CONNECTION=sqlite
+ENV CACHE_STORE=file
+ENV CACHE_DRIVER=file
+ENV SESSION_DRIVER=file
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
 
@@ -49,8 +52,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 # Set Permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database \
+    && chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
 # Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
