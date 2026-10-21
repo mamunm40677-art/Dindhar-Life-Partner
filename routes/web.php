@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/preference-matches', [MutualMatchController::class, 'preferenceMatches'])->name('preference-matches');
     Route::get('/online-users', [MutualMatchController::class, 'onlineUsers'])->name('online-users');
     Route::get('/unlocked-contacts', [MutualMatchController::class, 'contactInfo'])->name('unlocked-contacts');
+    Route::get('/incoming-requests', [MutualMatchController::class, 'incomingRequests'])->name('incoming-requests');
+    Route::get('/shortlisted-by', [MutualMatchController::class, 'shortlistedBy'])->name('shortlisted-by');
+    Route::get('/profile-visitors', [MutualMatchController::class, 'profileVisitors'])->name('profile-visitors');
+    Route::get('/ignored-list', [MutualMatchController::class, 'ignoredList'])->name('ignored-list');
+    Route::get('/packages', [MutualMatchController::class, 'packagesPage'])->name('packages');
     Route::get('/my-biodata/create', [BiodataController::class, 'create'])->name('my-biodata.create');
     Route::post('/my-biodata', [BiodataController::class, 'store'])->name('my-biodata.store');
     Route::get('/my-biodata/{biodata}/edit', [BiodataController::class, 'edit'])->whereNumber('biodata')->name('my-biodata.edit');

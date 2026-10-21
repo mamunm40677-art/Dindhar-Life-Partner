@@ -96,4 +96,45 @@ class MutualMatchController extends Controller
     {
         return view('biodatas.contacts');
     }
+
+    public function incomingRequests(Request $request): View
+    {
+        return view('biodatas.generic_list', [
+            'title' => '👍 কারা রিকোয়েস্ট করেছে',
+            'subtitle' => 'যেসব পাত্র/পাত্রী আপনার সাথে যোগাযোগের আগ্রহ প্রকাশ করেছেন বা রিকোয়েস্ট পাঠিয়েছেন।',
+            'emptyMessage' => 'এখনো আপনাকে কেউ যোগাযোগ রিকোয়েস্ট পাঠায়নি।',
+        ]);
+    }
+
+    public function shortlistedBy(Request $request): View
+    {
+        return view('biodatas.generic_list', [
+            'title' => '❤️ কারা পছন্দে যুক্ত রেখেছে',
+            'subtitle' => 'যেসব ইউজার আপনার বায়োডাটা তাদের পছন্দের তালিকায় (Shortlist) যুক্ত করেছেন।',
+            'emptyMessage' => 'এখনো কেউ আপনার বায়োডাটা পছন্দের তালিকায় যুক্ত করেনি।',
+        ]);
+    }
+
+    public function profileVisitors(Request $request): View
+    {
+        return view('biodatas.generic_list', [
+            'title' => '👁️‍🗨️ কারা প্রোফাইল দেখেছে',
+            'subtitle' => 'সাম্প্রতিক যেসব দ্বীনদার ইউজার আপনার বায়োডাটা ভিজিট করেছেন।',
+            'emptyMessage' => 'সাম্প্রতিক সময়ে কেউ আপনার বায়োডাটা ভিজিট করেনি।',
+        ]);
+    }
+
+    public function ignoredList(Request $request): View
+    {
+        return view('biodatas.generic_list', [
+            'title' => '🚫 ইগনোর তালিকা',
+            'subtitle' => 'যেসব বায়োডাটা আপনি হাইড বা ইগনোর করে রেখেছেন।',
+            'emptyMessage' => 'আপনার ইগনোর তালিকায় কোনো বায়োডাটা নেই।',
+        ]);
+    }
+
+    public function packagesPage(Request $request): View
+    {
+        return view('biodatas.packages');
+    }
 }
