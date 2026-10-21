@@ -160,6 +160,12 @@
                     <div class="dash-user-name">{{ auth()->user()->name }}</div>
                     <div class="dash-user-email">{{ auth()->user()->email }}</div>
 
+                    @if(auth()->user()->isAdmin())
+                        <div style="margin-bottom:8px">
+                            <span class="dash-badge-status" style="background:#dbeafe;color:#1e40af;border-color:#bfdbfe">🛡️ সিস্টেম এডমিন</span>
+                        </div>
+                    @endif
+
                     @if ($myBiodata)
                         <span class="dash-badge-status {{ $myBiodata->published ? '' : 'draft' }}">
                             {{ $myBiodata->published ? '🟢 বায়োডাটা পাবলিশড' : '🟡 পেন্ডিং/ড্রাফট' }}
@@ -170,6 +176,12 @@
                         </span>
                     @endif
                 </div>
+
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;padding:12px;background:#062820;color:#cba135;border:1.5px solid #cba135;border-radius:12px;text-align:center;font-weight:700;font-size:13px;text-decoration:none">
+                        🕌 এডমিন প্যানেলে যান (Admin Panel)
+                    </a>
+                @endif
 
                 <nav class="dash-nav">
                     <!-- 1. ড্যাশবোর্ড -->
