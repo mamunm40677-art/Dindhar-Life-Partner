@@ -184,6 +184,36 @@
                 @endif
 
                 <nav class="dash-nav">
+                    @if(auth()->user()->isAdmin())
+                        <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1.5px solid var(--dash-border)">
+                            <div style="font-size:11px;font-weight:700;color:var(--dash-gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px">
+                                🕌 এডমিন অপশনস (ADMIN PANEL)
+                            </div>
+                            <a href="{{ route('admin.dashboard') }}" class="dash-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="background:#062820;color:#cba135;margin-bottom:4px">
+                                <span class="nav-label"><span class="icon">📊</span> এডমিন ড্যাশবোর্ড</span>
+                            </a>
+                            <a href="{{ route('admin.users.index') }}" class="dash-nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">👥</span> ইউজার অ্যাকাউন্টস (Users)</span>
+                            </a>
+                            <a href="{{ route('admin.requests.index') }}" class="dash-nav-item {{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">📩</span> ইউজার রিকোয়েস্ট (Requests)</span>
+                                @php $pReqCount = \App\Models\UserRequest::where('status', 'pending')->count(); @endphp
+                                @if($pReqCount > 0)
+                                    <span class="dash-badge-new" style="background:#dc2626;color:#fff">{{ $pReqCount }}</span>
+                                @endif
+                            </a>
+                            <a href="{{ route('admin.plans.index') }}" class="dash-nav-item {{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">💎</span> সাবস্ক্রিপশন প্ল্যান (Plans)</span>
+                            </a>
+                            <a href="{{ route('admin.biodatas.index') }}" class="dash-nav-item {{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">📜</span> বায়োডাটা ব্যবস্থাপনা</span>
+                            </a>
+                            <a href="{{ route('admin.messages.index') }}" class="dash-nav-item {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">✉️</span> কন্টাক্ট মেসেজ</span>
+                            </a>
+                        </div>
+                    @endif
+
                     <!-- 1. ড্যাশবোর্ড -->
                     <a href="{{ route('dashboard') }}" class="dash-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <span class="nav-label"><span class="icon">📊</span> ড্যাশবোর্ড</span>
