@@ -129,6 +129,11 @@
                         <span>💎 সাবস্ক্রিপশন প্ল্যান (Plans)</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.banners.index') }}" class="{{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                        <span>🖼️ হিরো ব্যানার (Hero Banners)</span>
+                    </a>
+                </li>
 
                 <!-- GENERAL MANAGEMENT -->
                 <li class="nav-section-title">⚙️ GENERAL</li>

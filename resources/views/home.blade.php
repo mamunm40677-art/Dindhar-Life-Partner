@@ -8,48 +8,163 @@
         <div class="container hero-grid">
             <div>
                 <span class="badge-pill">
-                    <span class="dot"></span> বর্তমান নিবন্ধিত বায়োডাটা: <strong>{{ number_format($totalBiodatas + 3450) }}+</strong> টি
+                    <span class="dot"></span> {{ $heroBanner->badge_text ?? ('বর্তমান নিবন্ধিত বায়োডাটা: '.number_format($totalBiodatas + 3450).'+ টি') }}
                 </span>
-                <h1>পবিত্র ও সুন্নতি উপায়ে<br><em>দ্বীনদার জীবনসঙ্গী</em> নির্বাচন করুন</h1>
+                <h1>{!! nl2br(e($heroBanner->title ?? 'পবিত্র ও সুন্নতি উপায়ে দ্বীনদার জীবনসঙ্গী নির্বাচন করুন')) !!}</h1>
                 <p class="hero-copy">
-                    পর্দা ও শরীয়াহ শতভাগ বজায় রেখে অভিভাবকের প্রত্যক্ষ তত্ত্বাবধানে সঠিক দ্বীনদার পাত্র-পাত্রী খোঁজার একমাত্র বিশ্বস্ত প্রিমিয়াম ইসলামিক ম্যাট্রিমোনিয়াল প্ল্যাটফর্ম।
+                    {{ $heroBanner->subtitle ?? 'পর্দা ও শরীয়াহ শতভাগ বজায় রেখে অভিভাবকের প্রত্যক্ষ তত্ত্বাবধানে সঠিক দ্বীনদার পাত্র-পাত্রী খোঁজার একমাত্র বিশ্বস্ত প্রিমিয়াম ইসলামিক ম্যাট্রিমোনিয়াল প্ল্যাটফর্ম।' }}
                 </p>
                 <div class="hero-buttons">
-                    <a href="{{ route('register') }}" class="button gold">📁 বিনামূল্যে বায়োডাটা জমা দিন</a>
-                    <a href="#profiles" class="button secondary-outline">👥 বায়োডাটা ব্রাউজ করুন</a>
+                    @if($heroBanner?->button1_text)
+                        <a href="{{ $heroBanner->button1_link ?? route('register') }}" class="button gold">{{ $heroBanner->button1_text }}</a>
+                    @else
+                        <a href="{{ route('register') }}" class="button gold">📁 বিনামূল্যে বায়োডাটা জমা দিন</a>
+                    @endif
+
+                    @if($heroBanner?->button2_text)
+                        <a href="{{ $heroBanner->button2_link ?? '#search-filter' }}" class="button secondary-outline">{{ $heroBanner->button2_text }}</a>
+                    @else
+                        <a href="#search-filter" class="button secondary-outline">👥 বায়োডাটা ব্রাউজ করুন</a>
+                    @endif
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1100&q=85" alt="Dindaar Life Partner" fetchpriority="high">
-                <span>পবিত্র সম্পর্কের সূচনায় শরীয়াহভিত্তিক একমাত্র বিশ্বস্ত প্ল্যাটফর্ম</span>
+                <img src="{{ $heroBanner->image_url ?? 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1100&q=85' }}" alt="Dindaar Life Partner" fetchpriority="high">
+                <span>{{ $heroBanner->image_caption ?? 'পবিত্র সম্পর্কের সূচনায় শরীয়াহভিত্তিক একমাত্র বিশ্বস্ত প্ল্যাটফর্ম' }}</span>
             </div>
         </div>
     </section>
 
-    <!-- Search / Filter Section -->
+    <!-- Deendar Practice Banner Section -->
+    <section class="container" style="margin-top: 35px; margin-bottom: 20px;">
+        <div style="background: linear-gradient(135deg, #062820 0%, #0d493a 100%); border: 2px solid #cba135; border-radius: 16px; padding: 28px 32px; color: #ffffff; box-shadow: 0 10px 30px rgba(6,40,32,0.12);">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+                <div>
+                    <span style="background: #cba135; color: #062820; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 8px;">
+                        🕌 দ্বীনদার প্র্যাকটিস
+                    </span>
+                    <h2 style="font-family: var(--serif); font-size: 24px; font-weight: 700; color: #ffffff; margin: 0 0 8px;">
+                        দ্বীনদার মানুষের আবশ্যকীয় ৫টি ইসলামিক প্র্যাকটিস
+                    </h2>
+                    <p style="font-size: 13px; color: #e2ece8; margin: 0; line-height: 1.7; max-width: 680px;">
+                        দ্বীনদার লাইফ পার্টনারে আমরা পাত্র-পাত্রীর দ্বীনদার প্র্যাকটিস (সালাত, পর্দা, কুরআন তিলাওয়াত, হালাল রুজি ও আমল) সবচেয়ে বেশি গুরুত্ব প্রদান করি।
+                    </p>
+                </div>
+                <a href="{{ route('biodatas.index') }}" style="background: #cba135; color: #062820; padding: 12px 24px; border-radius: 30px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: 0.2s; border: 1px solid #cba135; white-space: nowrap;">
+                    🕌 দ্বীনদার পাত্র-পাত্রী খুঁজুন →
+                </a>
+            </div>
+
+            <!-- 5 Practice Pillars Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.15);">
+                <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(203,161,53,0.3); padding: 14px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 6px;">🕌</div>
+                    <strong style="font-size: 13px; color: #cba135; display: block;">৫ ওয়াক্ত সালাত</strong>
+                    <span style="font-size: 11px; color: #e2ece8;">জামাতে ও সময়ে সালাত আদায়</span>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(203,161,53,0.3); padding: 14px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 6px;">🧕</div>
+                    <strong style="font-size: 13px; color: #cba135; display: block;">শরীয়াহ পর্দা</strong>
+                    <span style="font-size: 11px; color: #e2ece8;">পূর্ণাঙ্গ হিজাব ও শালীনতা</span>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(203,161,53,0.3); padding: 14px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 6px;">📖</div>
+                    <strong style="font-size: 13px; color: #cba135; display: block;">কুরআন ও দ্বীনি শিক্ষা</strong>
+                    <span style="font-size: 11px; color: #e2ece8;">নিয়মিত তিলাওয়াত ও আমল</span>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(203,161,53,0.3); padding: 14px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 6px;">💼</div>
+                    <strong style="font-size: 13px; color: #cba135; display: block;">হালাল রুজি</strong>
+                    <span style="font-size: 11px; color: #e2ece8;">সুদ-মুক্ত ও সৎ উপার্জন</span>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(203,161,53,0.3); padding: 14px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 6px;">🤝</div>
+                    <strong style="font-size: 13px; color: #cba135; display: block;">অভিভাবকের সম্মতি</strong>
+                    <span style="font-size: 11px; color: #e2ece8;">শরীয়াহ সম্মত অভিভাবক মাধ্যম</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search / Dual Main Options Section -->
     <section class="container search-wrap" id="search-filter">
-        <form class="search-panel-rich" method="get" action="{{ route('biodatas.index') }}">
+        <!-- Primary Two Options Buttons Header -->
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <button type="button" onclick="switchMainOption('deendar_practice')" id="opt-btn-practice" style="flex: 1; padding: 14px 20px; border-radius: 12px; border: 2px solid #cba135; background: #062820; color: #cba135; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(6,40,32,0.12); transition: all 0.2s ease;">
+                <span>🕌 ১. দ্বীনদার প্র্যাকটিস</span>
+            </button>
+
+            <button type="button" onclick="switchMainOption('deendar_manush')" id="opt-btn-manush" style="flex: 1; padding: 14px 20px; border-radius: 12px; border: 2px solid #e5e0d3; background: #ffffff; color: #062820; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(6,40,32,0.03); transition: all 0.2s ease;">
+                <span>👤 ২. দ্বীনদার মানুষ</span>
+            </button>
+        </div>
+
+        <!-- Option 1 Form: Deendar Practice (দ্বীনদার প্র্যাকটিস) -->
+        <form class="search-panel-rich" id="form-deendar-practice" method="get" action="{{ route('biodatas.index') }}" style="border: 2px solid #cba135;">
+            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e0d3; font-weight: 700; color: #062820; font-size: 15px;">
+                🕌 দ্বীনদার প্র্যাকটিস অনুযায়ী পাত্র-পাত্রী খুঁজুন:
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>পাত্র / পাত্রী</span>
+                    <select name="gender">
+                        <option value="">সকল (দ্বীনদার পাত্র ও পাত্রী)</option>
+                        <option value="groom" @selected(request('gender') === 'groom')>♂ দ্বীনদার পাত্র</option>
+                        <option value="bride" @selected(request('gender') === 'bride')>♀ দ্বীনদার পাত্রী</option>
+                    </select>
+                </label>
+
+                <label>
+                    <span>দ্বীনদারী আমল ও প্র্যাকটিস</span>
+                    <select name="deendar_keyword">
+                        <option value="">সকল ইসলামি আমল ও প্র্যাকটিস</option>
+                        <option value="সালাত" @selected(request('deendar_keyword') === 'সালাত')>🕌 ৫ ওয়াক্ত সালাত (জামাতে/সময়ে)</option>
+                        <option value="পর্দা" @selected(request('deendar_keyword') === 'পর্দা')>🧕 শরীয়াহ সম্মত পর্দা/হিজাব</option>
+                        <option value="কোরআন" @selected(request('deendar_keyword') === 'কোরআন')>📖 নিয়মিত কোরআন তিলাওয়াত</option>
+                        <option value="হাফেজ" @selected(request('deendar_keyword') === 'হাফেজ')>হাফেজে কোরআন</option>
+                        <option value="আলেম" @selected(request('deendar_keyword') === 'আলেম')>আলেম / আলেমা</option>
+                        <option value="সুন্নত" @selected(request('deendar_keyword') === 'সুন্নত')>সুন্নতি জীবনধারা ও আমল</option>
+                    </select>
+                </label>
+
+                <label>
+                    <span>দ্বীনি ব্যাকগ্রাউন্ড ও শিক্ষা</span>
+                    <select name="education">
+                        <option value="">সকল দ্বীনি ও সাধারণ শিক্ষা</option>
+                        <option value="আলেম" @selected(request('education') === 'আলেম')>আলেম / দাওরায়ে হাদিস / কামিল</option>
+                        <option value="হাফেজ" @selected(request('education') === 'হাফেজ')>হাফেজে কোরআন</option>
+                        <option value="গ্র্যাজুয়েশন" @selected(request('education') === 'গ্র্যাজুয়েশন')>গ্র্যাজুয়েশন (অনার্স/বিবিএ/বিএসসি)</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-submit">
+                <button type="submit" class="button filter-btn" style="background: #062820; color: #cba135;">
+                    🕌 দ্বীনদার প্র্যাকটিস অনুযায়ী ফিল্টার করুন
+                </button>
+            </div>
+        </form>
+
+        <!-- Option 2 Form: Deendar Manush (দ্বীনদার মানুষ) -->
+        <form class="search-panel-rich" id="form-deendar-manush" method="get" action="{{ route('biodatas.index') }}" style="display: none;">
+            <div style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e0d3; font-weight: 700; color: #062820; font-size: 15px;">
+                👤 দ্বীনদার মানুষ (পাত্র-পাত্রীর ব্যক্তিগত বিবরণ) অনুযায়ী খুঁজুন:
+            </div>
             <div class="form-row">
                 <label>
                     <span>আমি খুঁজছি</span>
                     <select name="gender">
                         <option value="">পাত্র / পাত্রী (সকল)</option>
-                        <option value="groom" @selected(request('gender') === 'groom')>♂ পাত্র</option>
-                        <option value="bride" @selected(request('gender') === 'bride')>♀ পাত্রী</option>
+                        <option value="groom" @selected(request('gender') === 'groom')>♂ দ্বীনদার পাত্র</option>
+                        <option value="bride" @selected(request('gender') === 'bride')>♀ দ্বীনদার পাত্রী</option>
                     </select>
                 </label>
+
                 <label>
-                    <span>বয়সের সীমা</span>
-                    <select name="age_range">
-                        <option value="">সকল বয়স</option>
-                        <option value="18-25">১৮ - ২৫ বছর</option>
-                        <option value="26-30">২৬ - ৩০ বছর</option>
-                        <option value="31-35">৩১ - ৩৫ বছর</option>
-                        <option value="36+">৩৬+ বছর</option>
-                    </select>
-                </label>
-                <label>
-                    <span>অবস্থান / বিভাগ</span>
+                    <span>অবস্থান / জেলা</span>
                     <select name="city">
                         <option value="">সকল জেলা / বিভাগ</option>
                         <option value="ঢাকা">ঢাকা</option>
@@ -62,6 +177,7 @@
                         <option value="ময়মনসিংহ">ময়মনসিংহ</option>
                     </select>
                 </label>
+
                 <label>
                     <span>বৈবাহিক অবস্থা</span>
                     <select name="marital_status">
@@ -71,43 +187,52 @@
                         <option value="widowed">বিধবা/বিপত্নীক</option>
                     </select>
                 </label>
-            </div>
-            <div class="form-row mt-3">
+
                 <label>
-                    <span>পেশা</span>
-                    <select name="occupation">
-                        <option value="">সকল পেশা</option>
-                        <option value="শিক্ষক">শিক্ষক/শিক্ষিকা</option>
-                        <option value="প্রকৌশলী">সফটওয়্যার/সিভিল ইঞ্জিনিয়ার</option>
-                        <option value="ডাক্তার">ডাক্তার</option>
-                        <option value="ব্যবসায়ী">ব্যবসায়ী</option>
-                        <option value="চাকরিজীবী">সরকারি/বেসরকারি চাকরিজীবী</option>
-                    </select>
-                </label>
-                <label>
-                    <span>শিক্ষাগত যোগ্যতা</span>
-                    <select name="education">
-                        <option value="">সকল শিক্ষা</option>
-                        <option value="আলেম">আলেম / দাওরায়ে হাদিস / হিফজ</option>
-                        <option value="গ্র্যাজুয়েশন">গ্র্যাজুয়েশন (অনার্স/বিবিএ/বিএসসি)</option>
-                        <option value="পোস্ট গ্র্যাজুয়েশন">পোস্ট গ্র্যাজুয়েশন (মাস্টার্স)</option>
-                    </select>
-                </label>
-                <label>
-                    <span>মাজহাব / মানহাজ</span>
-                    <select name="manhaj">
-                        <option value="">সকল মাজহাব/মানহাজ</option>
-                        <option value="হানাফী">হানাফী</option>
-                        <option value="আহলে হাদীস">আহলে হাদীস</option>
-                        <option value="অন্যান্য">অন্যান্য</option>
-                    </select>
+                    <span>নাম বা আইডি (কি-ওয়ার্ড)</span>
+                    <input name="q" value="{{ request('q') }}" placeholder="নাম, পেশা বা বায়োডাটা আইডি...">
                 </label>
             </div>
             <div class="form-submit">
-                <button type="submit" class="button filter-btn">🔍 ফিল্টার অনুযায়ী বায়োডাটা ফিল্টার করুন</button>
+                <button type="submit" class="button filter-btn">
+                    👤 দ্বীনদার মানুষ অনুযায়ী ফিল্টার করুন
+                </button>
             </div>
         </form>
     </section>
+
+    <script>
+        function switchMainOption(optionType) {
+            var formPractice = document.getElementById('form-deendar-practice');
+            var formManush = document.getElementById('form-deendar-manush');
+            var btnPractice = document.getElementById('opt-btn-practice');
+            var btnManush = document.getElementById('opt-btn-manush');
+
+            if (optionType === 'deendar_manush') {
+                formPractice.style.display = 'none';
+                formManush.style.display = 'block';
+
+                btnPractice.style.background = '#ffffff';
+                btnPractice.style.color = '#062820';
+                btnPractice.style.borderColor = '#e5e0d3';
+
+                btnManush.style.background = '#062820';
+                btnManush.style.color = '#cba135';
+                btnManush.style.borderColor = '#cba135';
+            } else {
+                formPractice.style.display = 'block';
+                formManush.style.display = 'none';
+
+                btnPractice.style.background = '#062820';
+                btnPractice.style.color = '#cba135';
+                btnPractice.style.borderColor = '#cba135';
+
+                btnManush.style.background = '#ffffff';
+                btnManush.style.color = '#062820';
+                btnManush.style.borderColor = '#e5e0d3';
+            }
+        }
+    </script>
 
     <!-- Verified Live Profiles Grid -->
     <section class="container section" id="profiles">

@@ -209,6 +209,9 @@
                             <a href="{{ route('admin.plans.index') }}" class="dash-nav-item {{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">💎</span> সাবস্ক্রিপশন প্ল্যান (Plans)</span>
                             </a>
+                            <a href="{{ route('admin.banners.index') }}" class="dash-nav-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">🖼️</span> হিরো ব্যানার (Hero Banners)</span>
+                            </a>
                             <a href="{{ route('admin.biodatas.index') }}" class="dash-nav-item {{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">📜</span> বায়োডাটা ব্যবস্থাপনা</span>
                             </a>

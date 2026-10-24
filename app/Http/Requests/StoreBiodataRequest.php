@@ -43,6 +43,7 @@ class StoreBiodataRequest extends FormRequest
             'education' => ['required', 'string', 'max:160'],
             'occupation' => ['required', 'string', 'max:120'],
             'about' => ['required', 'string', 'max:2000'],
+            'deendar_practice' => ['nullable', 'string', 'max:2000'],
             'published' => ['sometimes', 'boolean'],
         ];
     }

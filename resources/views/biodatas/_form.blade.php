@@ -435,13 +435,18 @@
                 </div>
             </div>
 
-            <!-- Step 6 to 9 Info Notes -->
+            <!-- Step 6: Deendar Practice & Religious Info -->
             <div class="tab-content" id="tab-step-6">
                 <div class="step-header">
-                    <h2>৬. ধর্মীয় তথ্য</h2>
-                    <p>সালাত ও দ্বীনী আমল সংক্রান্ত বিবরণ।</p>
+                    <h2>৬. দ্বীনদার প্র্যাকটিস ও ধর্মীয় তথ্য</h2>
+                    <p>আপনার দ্বীনদারী, সালাত, পর্দা ও ইসলামিক আমল সংক্রান্ত বিবরণ দিন।</p>
                 </div>
-                <p style="font-size: 13px; color: var(--b-muted);">এই তথ্যাদি নিজের সম্পর্কে বর্ণনায় সংরক্ষিত থাকবে। পরবর্তী ধাপে যান।</p>
+                <div class="form-grid-1">
+                    <div class="field-group">
+                        <label>🕌 দ্বীনদারী প্র্যাকটিস ও ইসলামিক অনুশীলনের বিবরণ (Deendar Practice)</label>
+                        <textarea name="deendar_practice" maxlength="2000" rows="5" placeholder="যেমন: আলহামদুলিল্লাহ প্রতিদিন ৫ ওয়াক্ত সালাত সময়ে পড়া হয়, শরীয়াহ সম্মত পর্দার বিধান মেনে চলা হয়, নিয়মিত কোরআন তিলাওয়াত, দ্বীনি তা'লীম এবং সুন্নত অনুসরণ করা হয়...">{{ old('deendar_practice', $biodata->deendar_practice) }}</textarea>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-content" id="tab-step-7">

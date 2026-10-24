@@ -332,14 +332,30 @@
         </a>
     </div>
 
-    <!-- Tab 5: Religious -->
+    <!-- Tab 5: Religious & Deendar Practice -->
     <div class="tab-pane" id="view-pane-5">
-        <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
-            এখনো পর্যন্ত আপনি এই তথ্য পূরণ করেন নি।
-        </p>
-        <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
-            তথ্য পূরণ করি
-        </a>
+        @if($biodata->deendar_practice)
+            <div style="background: #f0f7f4; border: 1.5px solid #2a5849; padding: 20px; border-radius: 12px; text-align: left; margin-bottom: 24px;">
+                <h3 style="font-family: var(--serif); color: #062820; font-size: 18px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px;">
+                    🕌 দ্বীনদারী প্র্যাকটিস ও দ্বীনি অনুশীলন
+                </h3>
+                <p style="font-size: 14px; color: #15382f; line-height: 1.8; margin: 0; white-space: pre-line;">
+                    {{ $biodata->deendar_practice }}
+                </p>
+            </div>
+        @else
+            <p style="font-size: 15px; color: #69766f; margin-bottom: 24px;">
+                এখনো পর্যন্ত দ্বীনদারী প্র্যাকটিসের তথ্য যুক্ত করা হয়নি।
+            </p>
+        @endif
+
+        @auth
+            @if(auth()->user()->biodata?->is($biodata))
+                <a href="{{ route('my-biodata.edit', $biodata) }}" class="btn-fill-info">
+                    দ্বীনদারী তথ্য আপডেট করি
+                </a>
+            @endif
+        @endauth
     </div>
 
     <!-- Tab 6: Marital -->
