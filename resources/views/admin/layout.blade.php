@@ -134,6 +134,11 @@
                         <span>🖼️ হিরো ব্যানার (Hero Banners)</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.stories.index') }}" class="{{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
+                        <span>💕 সাফল্যের গল্প (Stories)</span>
+                    </a>
+                </li>
 
                 <!-- GENERAL MANAGEMENT -->
                 <li class="nav-section-title">⚙️ GENERAL</li>

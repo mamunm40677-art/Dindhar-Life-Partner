@@ -390,8 +390,8 @@
         </div>
     </section>
 
-    <!-- Success Stories -->
-    <section class="section stories-section">
+    <!-- Dynamic Success Stories -->
+    <section class="section stories-section" id="stories">
         <div class="container">
             <div class="section-center-head">
                 <span class="sub-title">আলহামদুলিল্লাহ</span>
@@ -399,33 +399,23 @@
                 <p>যারা দ্বীনদার লাইফ পার্টনারের মাধ্যমে সঠিক জীবনসঙ্গী খুঁজে বিবাহ বন্ধনে আবদ্ধ হয়েছেন</p>
             </div>
             <div class="stories-grid">
-                <div class="story-card">
-                    <div class="story-img">
-                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80" alt="Success Story">
+                @forelse($successStories as $story)
+                    <div class="story-card">
+                        <div class="story-img">
+                            <img src="{{ $story->image_url ?? 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80' }}" alt="{{ $story->title }}">
+                        </div>
+                        <h3>{{ $story->title }}</h3>
+                        @if($story->marriage_date)
+                            <span class="date">{{ $story->marriage_date }}</span>
+                        @endif
+                        <p>"{{ $story->quote }}"</p>
+                        <a href="{{ $story->link_url ?? route('about') }}" class="story-link">পুরা গল্প পড়ুন ❤</a>
                     </div>
-                    <h3>আব্দুল্লাহ & ফাতেমা</h3>
-                    <span class="date">বিবাহ: ফেব্রুয়ারি ২০২৪</span>
-                    <p>"আলহামদুলিল্লাহ, দ্বীনদার লাইফ পার্টনারের মাধ্যমে খুব দ্রুত ও সুন্নতি নিয়মে অভিভাবকের উপস্থিতিতে আমাদের বিবাহ সম্পন্ন হয়েছে।"</p>
-                    <a href="{{ route('about') }}" class="story-link">পুরা গল্প পড়ুন ❤</a>
-                </div>
-                <div class="story-card">
-                    <div class="story-img">
-                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Success Story">
+                @empty
+                    <div style="grid-column: 1/-1; text-align: center; color: #69766f; padding: 20px;">
+                        কোনো সাফল্যের গল্প যুক্ত করা হয়নি।
                     </div>
-                    <h3>মাহমুদ & আয়েশা</h3>
-                    <span class="date">বিবাহ: এপ্রিল ২০২৪</span>
-                    <p>"অভিভাবকদের সরাসরি অংশগ্রহণ এবং পর্দার বিধান পুরোপুরি মেনে বিয়ের আয়োজনে আমরা অত্যন্ত সন্তুষ্ট। ধন্যবাদ!"</p>
-                    <a href="{{ route('about') }}" class="story-link">পুরা গল্প পড়ুন ❤</a>
-                </div>
-                <div class="story-card">
-                    <div class="story-img">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Success Story">
-                    </div>
-                    <h3>ওমর & খাদিজা</h3>
-                    <span class="date">বিবাহ: জুন ২০২৪</span>
-                    <p>"বায়োডাটার তথ্যগুলো নিখুঁত ছিল। বিশেষ করে ফিল্টার পছন্দমতো সঠিক দ্বীনদার জীবনসঙ্গী নির্বাচন সহজ করেছে।"</p>
-                    <a href="{{ route('about') }}" class="story-link">পুরা গল্প পড়ুন ❤</a>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>

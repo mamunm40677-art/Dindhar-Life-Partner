@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Biodata;
 use App\Models\Plan;
+use App\Models\SuccessStory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
@@ -33,6 +34,10 @@ class HomeController extends Controller
             ? Banner::where('is_active', true)->orderBy('sort_order')->first()
             : null;
 
-        return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans', 'heroBanner'));
+        $successStories = Schema::hasTable('success_stories')
+            ? SuccessStory::where('is_active', true)->orderBy('sort_order')->get()
+            : collect();
+
+        return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans', 'heroBanner', 'successStories'));
     }
 }
