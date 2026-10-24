@@ -135,7 +135,9 @@ class MutualMatchController extends Controller
 
     public function packagesPage(Request $request): View
     {
-        $plans = \App\Models\Plan::where('is_active', true)->orderBy('sort_order')->get();
+        $plans = \Illuminate\Support\Facades\Schema::hasTable('plans')
+            ? \App\Models\Plan::where('is_active', true)->orderBy('sort_order')->get()
+            : collect();
         return view('biodatas.packages', compact('plans'));
     }
 }

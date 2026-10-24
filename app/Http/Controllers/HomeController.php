@@ -23,7 +23,9 @@ class HomeController extends Controller
         $groomsCount = Biodata::where('published', true)->where('gender', 'groom')->count();
         $bridesCount = Biodata::where('published', true)->where('gender', 'bride')->count();
 
-        $plans = Plan::where('is_active', true)->orderBy('sort_order')->get();
+        $plans = \Illuminate\Support\Facades\Schema::hasTable('plans')
+            ? Plan::where('is_active', true)->orderBy('sort_order')->get()
+            : collect();
 
         return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans'));
     }

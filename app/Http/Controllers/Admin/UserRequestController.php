@@ -7,6 +7,7 @@ use App\Models\Biodata;
 use App\Models\UserRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class UserRequestController extends Controller
@@ -25,25 +26,26 @@ class UserRequestController extends Controller
 
         $userRequests = $query->latest()->paginate(15)->withQueryString();
 
-        $pendingCount = UserRequest::where('status', 'pending')->count();
-        $approvedCount = UserRequest::where('status', 'approved')->count();
-        $rejectedCount = UserRequest::where('status', 'rejected')->count();
+        $pendingCount = Schema::hasTable('user_requests') ? UserRequest::where('status', 'pending')->count() : 0;
+        $approvedCount = Schema::hasTable('user_requests') ? UserRequest::where('status', 'approved')->count() : 0;
+        $rejectedCount = Schema::hasTable('user_requests') ? UserRequest::where('status', 'rejected')->count() : 0;
 
-        // Auto sync pending biodatas that are not published as requests if none exists
-        $unapprovedBiodatas = Biodata::where('published', false)->get();
-        foreach ($unapprovedBiodatas as $biodata) {
-            UserRequest::firstOrCreate(
-                [
-                    'user_id' => $biodata->user_id,
-                    'biodata_id' => $biodata->id,
-                    'type' => 'biodata_approval',
-                ],
-                [
-                    'title' => 'বায়োডাটা অনুমোদন রিকোয়েস্ট (ID: #' . $biodata->id . ')',
-                    'details' => 'ইউজার ' . $biodata->display_name . ' নতুন বায়োডাটা অনুমোদনের জন্য আবেদন করেছেন।',
-                    'status' => 'pending',
-                ]
-            );
+        if (Schema::hasTable('biodatas') && Schema::hasTable('user_requests')) {
+            $unapprovedBiodatas = Biodata::where('published', false)->get();
+            foreach ($unapprovedBiodatas as $biodata) {
+                UserRequest::firstOrCreate(
+                    [
+                        'user_id' => $biodata->user_id,
+                        'biodata_id' => $biodata->id,
+                        'type' => 'biodata_approval',
+                    ],
+                    [
+                        'title' => 'বায়োডাটা অনুমোদন রিকোয়েস্ট (ID: #' . $biodata->id . ')',
+                        'details' => 'ইউজার ' . $biodata->display_name . ' নতুন বায়োডাটা অনুমোদনের জন্য আবেদন করেছেন।',
+                        'status' => 'pending',
+                    ]
+                );
+            }
         }
 
         return view('admin.requests.index', compact('userRequests', 'pendingCount', 'approvedCount', 'rejectedCount'));
@@ -56,7 +58,6 @@ class UserRequestController extends Controller
             'admin_note' => 'এডমিন কর্তৃক অনুমোদিত হয়েছে।'
         ]);
 
-        // If it's a biodata approval request, publish the biodata
         if ($userRequest->biodata) {
             $userRequest->biodata->update(['published' => true]);
         }

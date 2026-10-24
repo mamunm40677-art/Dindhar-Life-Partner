@@ -111,7 +111,11 @@
                 <li>
                     <a href="{{ route('admin.requests.index') }}" class="{{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
                         <span>📩 ইউজার রিকোয়েস্ট (Requests)</span>
-                        @php $pCount = \App\Models\UserRequest::where('status', 'pending')->count(); @endphp
+                        @php
+                            $pCount = \Illuminate\Support\Facades\Schema::hasTable('user_requests')
+                                ? \App\Models\UserRequest::where('status', 'pending')->count()
+                                : 0;
+                        @endphp
                         @if($pCount > 0)
                             <span class="badge badge-red">{{ $pCount }}</span>
                         @endif

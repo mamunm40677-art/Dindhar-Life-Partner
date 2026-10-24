@@ -197,7 +197,11 @@
                             </a>
                             <a href="{{ route('admin.requests.index') }}" class="dash-nav-item {{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">📩</span> ইউজার রিকোয়েস্ট (Requests)</span>
-                                @php $pReqCount = \App\Models\UserRequest::where('status', 'pending')->count(); @endphp
+                                @php
+                                    $pReqCount = \Illuminate\Support\Facades\Schema::hasTable('user_requests')
+                                        ? \App\Models\UserRequest::where('status', 'pending')->count()
+                                        : 0;
+                                @endphp
                                 @if($pReqCount > 0)
                                     <span class="dash-badge-new" style="background:#dc2626;color:#fff">{{ $pReqCount }}</span>
                                 @endif
