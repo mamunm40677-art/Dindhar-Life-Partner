@@ -51,7 +51,7 @@
                     <tr>
                         <td>#{{ $req->id }}</td>
                         <td><strong>{{ $req->user->name ?? 'N/A' }}</strong><br><small style="color:#64748b">{{ $req->user->email ?? '' }}</small></td>
-                        <td><span class="badge badge-blue">{{ strtoupper($req->type) }}</span></td>
+                        <td><span class="badge badge-blue">{{ strtoupper($req->type ?? '') }}</span></td>
                         <td>{{ $req->title }}</td>
                         <td>
                             @if($req->status === 'approved')

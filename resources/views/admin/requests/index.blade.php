@@ -39,7 +39,7 @@
                             <small style="color:#64748b">{{ $req->user->email ?? '' }}</small>
                         </td>
                         <td>
-                            <span class="badge badge-blue">{{ strtoupper($req->type) }}</span>
+                            <span class="badge badge-blue">{{ strtoupper($req->type ?? '') }}</span>
                         </td>
                         <td>
                             <strong>{{ $req->title }}</strong><br>

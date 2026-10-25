@@ -172,7 +172,7 @@
             <header class="top-navbar">
                 <div class="admin-title">@yield('page_title', 'ড্যাশবোর্ড')</div>
                 <div class="user-info">
-                    <span>👋 {{ auth()->user()->name }} (এডমিন)</span>
+                    <span>👋 {{ auth()->user()?->name ?? 'এডমিন' }} (এডমিন)</span>
                     <form action="{{ route('logout') }}" method="POST" style="display:inline">
                         @csrf
                         <button type="submit" class="btn-logout">লগআউট</button>
