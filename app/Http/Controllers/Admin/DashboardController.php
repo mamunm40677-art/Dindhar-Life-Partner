@@ -16,17 +16,22 @@ class DashboardController extends Controller
     public function index(): View
     {
         try {
+            $hasBiodatas = Schema::hasTable('biodatas');
+            $hasRequests = Schema::hasTable('user_requests');
+            $hasPlans = Schema::hasTable('plans');
+            $hasMessages = Schema::hasTable('contact_messages');
+
             $totalUsers = User::count();
-            $totalBiodatas = Schema::hasTable('biodatas') ? Biodata::count() : 0;
-            $publishedBiodatas = Schema::hasTable('biodatas') ? Biodata::where('published', true)->count() : 0;
-            $pendingBiodatas = Schema::hasTable('biodatas') ? Biodata::where('published', false)->count() : 0;
-            $totalMessages = Schema::hasTable('contact_messages') ? ContactMessage::count() : 0;
-            $activePlansCount = Schema::hasTable('plans') ? Plan::where('is_active', true)->count() : 0;
-            $pendingRequestsCount = Schema::hasTable('user_requests') ? UserRequest::where('status', 'pending')->count() : 0;
+            $totalBiodatas = $hasBiodatas ? Biodata::count() : 0;
+            $publishedBiodatas = $hasBiodatas ? Biodata::where('published', true)->count() : 0;
+            $pendingBiodatas = $hasBiodatas ? Biodata::where('published', false)->count() : 0;
+            $totalMessages = $hasMessages ? ContactMessage::count() : 0;
+            $activePlansCount = $hasPlans ? Plan::where('is_active', true)->count() : 0;
+            $pendingRequestsCount = $hasRequests ? UserRequest::where('status', 'pending')->count() : 0;
 
             $latestUsers = User::latest()->take(5)->get();
-            $latestBiodatas = Schema::hasTable('biodatas') ? Biodata::with('user')->latest()->take(5)->get() : collect();
-            $latestRequests = Schema::hasTable('user_requests') ? UserRequest::with(['user', 'biodata'])->latest()->take(5)->get() : collect();
+            $latestBiodatas = $hasBiodatas ? Biodata::with('user')->latest()->take(5)->get() : collect();
+            $latestRequests = $hasRequests ? UserRequest::with(array_values(array_filter(['user', $hasBiodatas ? 'biodata' : null])))->latest()->take(5)->get() : collect();
         } catch (\Throwable $e) {
             $totalUsers = 0;
             $totalBiodatas = 0;

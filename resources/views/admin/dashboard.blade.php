@@ -62,7 +62,7 @@
                                 <span class="badge badge-yellow">পেন্ডিং</span>
                             @endif
                         </td>
-                        <td>{{ $req->created_at->format('d M, Y - h:i A') }}</td>
+                        <td>{{ $req->created_at?->format('d M, Y - h:i A') ?? 'N/A' }}</td>
                         <td>
                             @if($req->status === 'pending')
                                 <form action="{{ route('admin.requests.approve', $req) }}" method="POST" style="display:inline">
