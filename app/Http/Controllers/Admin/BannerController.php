@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class BannerController extends Controller
 {
     public function index(): View
     {
-        $banners = Banner::query()->orderBy('sort_order')->get();
+        $banners = Schema::hasTable('banners')
+            ? Banner::query()->orderBy('sort_order')->get()
+            : collect();
+
         return view('admin.banners.index', compact('banners'));
     }
 

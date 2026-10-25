@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Biodata;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class BiodataController extends Controller
 {
     public function index(Request $request): View
     {
+        if (! Schema::hasTable('biodatas')) {
+            $biodatas = new LengthAwarePaginator([], 0, 15);
+            return view('admin.biodatas.index', compact('biodatas'));
+        }
+
         $query = Biodata::query()->with('user');
 
         if ($request->filled('status')) {

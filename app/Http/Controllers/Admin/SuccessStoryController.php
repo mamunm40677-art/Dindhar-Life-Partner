@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\SuccessStory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class SuccessStoryController extends Controller
 {
     public function index(): View
     {
-        $stories = SuccessStory::query()->orderBy('sort_order')->orderBy('id')->get();
+        $stories = Schema::hasTable('success_stories')
+            ? SuccessStory::query()->orderBy('sort_order')->orderBy('id')->get()
+            : collect();
+
         return view('admin.stories.index', compact('stories'));
     }
 

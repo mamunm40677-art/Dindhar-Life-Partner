@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -13,7 +14,10 @@ class PlanController extends Controller
 {
     public function index(): View
     {
-        $plans = Plan::query()->orderBy('sort_order')->orderBy('id')->get();
+        $plans = Schema::hasTable('plans')
+            ? Plan::query()->orderBy('sort_order')->orderBy('id')->get()
+            : collect();
+
         return view('admin.plans.index', compact('plans'));
     }
 
