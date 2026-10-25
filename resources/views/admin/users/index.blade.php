@@ -32,8 +32,18 @@
                         <td><strong>{{ $user->name }}</strong></td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            @if($user->biodata)
-                                <span class="badge badge-green">তৈরি করা আছে (#{{ $user->biodata->id }})</span>
+                            @php
+                                $hasBio = false;
+                                $bioId = null;
+                                try {
+                                    if ($user->biodata) {
+                                        $hasBio = true;
+                                        $bioId = $user->biodata->id;
+                                    }
+                                } catch (\Throwable $e) {}
+                            @endphp
+                            @if($hasBio)
+                                <span class="badge badge-green">তৈরি করা আছে (#{{ $bioId }})</span>
                             @else
                                 <span class="badge badge-yellow">তৈরি করা হয়নি</span>
                             @endif

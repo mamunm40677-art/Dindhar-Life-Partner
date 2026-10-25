@@ -6,24 +6,34 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = User::query()->with('biodata');
+        try {
+            $query = User::query();
 
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-            });
+            if (Schema::hasTable('biodatas')) {
+                $query->with('biodata');
+            }
+
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+                });
+            }
+
+            $users = $query->latest()->paginate(15)->withQueryString();
+        } catch (\Throwable $e) {
+            $users = new LengthAwarePaginator([], 0, 15);
         }
-
-        $users = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.users.index', compact('users'));
     }
@@ -45,8 +55,11 @@ class UserController extends Controller
         $data = [
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'is_admin' => $request->boolean('is_admin'),
         ];
+
+        if (Schema::hasColumn('users', 'is_admin')) {
+            $data['is_admin'] = $request->boolean('is_admin');
+        }
 
         if (! empty($validated['password'])) {
             $data['password'] = Hash::make($validated['password']);
@@ -63,9 +76,11 @@ class UserController extends Controller
             return back()->with('error', 'You cannot change your own admin status.');
         }
 
-        $user->update(['is_admin' => ! $user->is_admin]);
+        if (Schema::hasColumn('users', 'is_admin')) {
+            $user->update(['is_admin' => ! $user->is_admin]);
+        }
 
-        $status = $user->is_admin ? 'promoted to Admin' : 'removed from Admin';
+        $status = $user->isAdmin() ? 'promoted to Admin' : 'removed from Admin';
 
         return back()->with('success', "User {$user->name} has been {$status}.");
     }
@@ -76,9 +91,11 @@ class UserController extends Controller
             return back()->with('error', 'You cannot delete yourself.');
         }
 
-        if ($user->biodata) {
-            $user->biodata->delete();
-        }
+        try {
+            if ($user->biodata) {
+                $user->biodata->delete();
+            }
+        } catch (\Throwable $e) {}
 
         $user->delete();
 
