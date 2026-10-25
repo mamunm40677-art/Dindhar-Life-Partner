@@ -212,6 +212,9 @@
                             <a href="{{ route('admin.banners.index') }}" class="dash-nav-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">🖼️</span> হিরো ব্যানার (Hero Banners)</span>
                             </a>
+                            <a href="{{ route('admin.stories.index') }}" class="dash-nav-item {{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
+                                <span class="nav-label"><span class="icon">💕</span> সাফল্যের গল্প (Stories)</span>
+                            </a>
                             <a href="{{ route('admin.biodatas.index') }}" class="dash-nav-item {{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">📜</span> বায়োডাটা ব্যবস্থাপনা</span>
                             </a>

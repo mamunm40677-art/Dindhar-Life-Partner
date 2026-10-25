@@ -15,17 +15,30 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $totalUsers = User::count();
-        $totalBiodatas = Schema::hasTable('biodatas') ? Biodata::count() : 0;
-        $publishedBiodatas = Schema::hasTable('biodatas') ? Biodata::where('published', true)->count() : 0;
-        $pendingBiodatas = Schema::hasTable('biodatas') ? Biodata::where('published', false)->count() : 0;
-        $totalMessages = Schema::hasTable('contact_messages') ? ContactMessage::count() : 0;
-        $activePlansCount = Schema::hasTable('plans') ? Plan::where('is_active', true)->count() : 0;
-        $pendingRequestsCount = Schema::hasTable('user_requests') ? UserRequest::where('status', 'pending')->count() : 0;
+        try {
+            $totalUsers = User::count();
+            $totalBiodatas = Schema::hasTable('biodatas') ? Biodata::count() : 0;
+            $publishedBiodatas = Schema::hasTable('biodatas') ? Biodata::where('published', true)->count() : 0;
+            $pendingBiodatas = Schema::hasTable('biodatas') ? Biodata::where('published', false)->count() : 0;
+            $totalMessages = Schema::hasTable('contact_messages') ? ContactMessage::count() : 0;
+            $activePlansCount = Schema::hasTable('plans') ? Plan::where('is_active', true)->count() : 0;
+            $pendingRequestsCount = Schema::hasTable('user_requests') ? UserRequest::where('status', 'pending')->count() : 0;
 
-        $latestUsers = User::latest()->take(5)->get();
-        $latestBiodatas = Schema::hasTable('biodatas') ? Biodata::with('user')->latest()->take(5)->get() : collect();
-        $latestRequests = Schema::hasTable('user_requests') ? UserRequest::with(['user', 'biodata'])->latest()->take(5)->get() : collect();
+            $latestUsers = User::latest()->take(5)->get();
+            $latestBiodatas = Schema::hasTable('biodatas') ? Biodata::with('user')->latest()->take(5)->get() : collect();
+            $latestRequests = Schema::hasTable('user_requests') ? UserRequest::with(['user', 'biodata'])->latest()->take(5)->get() : collect();
+        } catch (\Throwable $e) {
+            $totalUsers = 0;
+            $totalBiodatas = 0;
+            $publishedBiodatas = 0;
+            $pendingBiodatas = 0;
+            $totalMessages = 0;
+            $activePlansCount = 0;
+            $pendingRequestsCount = 0;
+            $latestUsers = collect();
+            $latestBiodatas = collect();
+            $latestRequests = collect();
+        }
 
         return view('admin.dashboard', compact(
             'totalUsers',

@@ -13,16 +13,24 @@ class ContactMessageController extends Controller
 {
     public function index(): View
     {
-        $messages = Schema::hasTable('contact_messages')
-            ? ContactMessage::latest()->paginate(15)
-            : new LengthAwarePaginator([], 0, 15);
+        try {
+            $messages = Schema::hasTable('contact_messages')
+                ? ContactMessage::latest()->paginate(15)
+                : new LengthAwarePaginator([], 0, 15);
+        } catch (\Throwable $e) {
+            $messages = new LengthAwarePaginator([], 0, 15);
+        }
 
         return view('admin.messages.index', compact('messages'));
     }
 
     public function destroy(ContactMessage $message): RedirectResponse
     {
-        $message->delete();
+        try {
+            $message->delete();
+        } catch (\Throwable $e) {
+            return back()->with('error', 'মেসেজ ডিলেট করা সম্ভব হয়নি।');
+        }
 
         return back()->with('success', 'Message deleted successfully.');
     }
