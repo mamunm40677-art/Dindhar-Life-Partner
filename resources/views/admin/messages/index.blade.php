@@ -25,7 +25,7 @@
                         <td><a href="mailto:{{ $msg->email }}" style="color:#2563eb">{{ $msg->email }}</a></td>
                         <td>{{ $msg->subject }}</td>
                         <td style="max-width:300px;line-height:1.5">{{ $msg->message }}</td>
-                        <td>{{ $msg->created_at->format('d M, Y - h:i A') }}</td>
+                        <td>{{ $msg->created_at?->format('d M, Y - h:i A') ?? 'N/A' }}</td>
                         <td>
                             <form action="{{ route('admin.messages.destroy', $msg) }}" method="POST" onsubmit="return confirm('এই মেসেজটি ডিলিট করতে চান?')">
                                 @csrf

@@ -66,7 +66,7 @@
                                 <span class="badge badge-yellow">পেন্ডিং</span>
                             @endif
                         </td>
-                        <td>{{ $req->created_at->format('d M, Y - h:i A') }}</td>
+                        <td>{{ $req->created_at?->format('d M, Y - h:i A') ?? 'N/A' }}</td>
                         <td>
                             <div style="display:flex;gap:6px">
                                 @if($req->status === 'pending')

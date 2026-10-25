@@ -55,7 +55,7 @@
                                 <span class="badge badge-yellow">সাধারণ ইউজার</span>
                             @endif
                         </td>
-                        <td>{{ $user->created_at->format('d M, Y - h:i A') }}</td>
+                        <td>{{ $user->created_at?->format('d M, Y - h:i A') ?? 'N/A' }}</td>
                         <td>
                             <div style="display:flex;gap:6px">
                                 @if(auth()->id() !== $user->id)
