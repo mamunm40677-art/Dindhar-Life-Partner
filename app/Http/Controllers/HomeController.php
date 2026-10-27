@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Banner;
 use App\Models\Biodata;
 use App\Models\Plan;
@@ -38,6 +39,11 @@ class HomeController extends Controller
             ? SuccessStory::where('is_active', true)->orderBy('sort_order')->get()
             : collect();
 
-        return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans', 'heroBanner', 'successStories'));
+        $articles = Schema::hasTable('articles')
+            ? Article::where('is_active', true)->orderBy('sort_order')->orderBy('id', 'desc')->get()
+            : collect();
+
+        return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans', 'heroBanner', 'successStories', 'articles'));
     }
+}
 }

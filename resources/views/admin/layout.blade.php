@@ -143,6 +143,11 @@
                         <span>💕 সাফল্যের গল্প (Stories)</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ Route::has('admin.articles.index') ? route('admin.articles.index') : url('/admin/articles') }}" class="{{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
+                        <span>📰 ব্লগ & নির্দেশিকা (Blogs)</span>
+                    </a>
+                </li>
 
                 <!-- GENERAL MANAGEMENT -->
                 <li class="nav-section-title">⚙️ GENERAL</li>

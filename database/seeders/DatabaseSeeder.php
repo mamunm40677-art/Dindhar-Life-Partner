@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             BannerSeeder::class,
             SuccessStorySeeder::class,
             BiodataSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }
