@@ -27,11 +27,11 @@ chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/d
 php artisan migrate --force --no-interaction
 php artisan db:seed --force --no-interaction
 
-# Clear & Cache config, routes, and views
+# Clear all caches so new routes and config are immediately live
+php artisan optimize:clear
 php artisan config:clear
-php artisan cache:clear
-php artisan route:cache
-php artisan view:cache
+php artisan route:clear
+php artisan view:clear
 
 # Execute CMD
 exec "$@"
