@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\BiodataController as AdminBiodataController;
 use App\Http\Controllers\Admin\BannerController as AdminBannerController;
+use App\Http\Controllers\Admin\SuccessStoryController as AdminSuccessStoryController;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PlanController as AdminPlanController;
@@ -94,6 +96,24 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
     Route::put('/banners/{banner}', [AdminBannerController::class, 'update'])->name('banners.update');
     Route::post('/banners/{banner}/toggle-active', [AdminBannerController::class, 'toggleActive'])->name('banners.toggle-active');
     Route::delete('/banners/{banner}', [AdminBannerController::class, 'destroy'])->name('banners.destroy');
+
+    // Success Stories management
+    Route::get('/stories', [AdminSuccessStoryController::class, 'index'])->name('stories.index');
+    Route::get('/stories/create', [AdminSuccessStoryController::class, 'create'])->name('stories.create');
+    Route::post('/stories', [AdminSuccessStoryController::class, 'store'])->name('stories.store');
+    Route::get('/stories/{story}/edit', [AdminSuccessStoryController::class, 'edit'])->name('stories.edit');
+    Route::put('/stories/{story}', [AdminSuccessStoryController::class, 'update'])->name('stories.update');
+    Route::post('/stories/{story}/toggle-active', [AdminSuccessStoryController::class, 'toggleActive'])->name('stories.toggle-active');
+    Route::delete('/stories/{story}', [AdminSuccessStoryController::class, 'destroy'])->name('stories.destroy');
+
+    // Articles & Blog management
+    Route::get('/articles', [AdminArticleController::class, 'index'])->name('articles.index');
+    Route::get('/articles/create', [AdminArticleController::class, 'create'])->name('articles.create');
+    Route::post('/articles', [AdminArticleController::class, 'store'])->name('articles.store');
+    Route::get('/articles/{article}/edit', [AdminArticleController::class, 'edit'])->name('articles.edit');
+    Route::put('/articles/{article}', [AdminArticleController::class, 'update'])->name('articles.update');
+    Route::post('/articles/{article}/toggle-active', [AdminArticleController::class, 'toggleActive'])->name('articles.toggle-active');
+    Route::delete('/articles/{article}', [AdminArticleController::class, 'destroy'])->name('articles.destroy');
 
     // Biodatas management
     Route::get('/biodatas', [AdminBiodataController::class, 'index'])->name('biodatas.index');
