@@ -96,7 +96,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li>
-                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : url('/admin') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <span>📊 ড্যাশবোর্ড</span>
                     </a>
                 </li>
@@ -104,12 +104,12 @@
                 <!-- ACCOUNTS SECTION -->
                 <li class="nav-section-title">📂 ACCOUNTS</li>
                 <li>
-                    <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.users.index') ? route('admin.users.index') : url('/admin/users') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                         <span>👥 ইউজার অ্যাকাউন্টস (Users)</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.requests.index') }}" class="{{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.requests.index') ? route('admin.requests.index') : url('/admin/user-requests') }}" class="{{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
                         <span>📩 ইউজার রিকোয়েস্ট (Requests)</span>
                         @php
                             try {
@@ -129,17 +129,17 @@
                 <!-- BUSINESS SECTION -->
                 <li class="nav-section-title">💼 BUSINESS</li>
                 <li>
-                    <a href="{{ route('admin.plans.index') }}" class="{{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.plans.index') ? route('admin.plans.index') : url('/admin/plans') }}" class="{{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
                         <span>💎 সাবস্ক্রিপশন প্ল্যান (Plans)</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.banners.index') }}" class="{{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.banners.index') ? route('admin.banners.index') : url('/admin/banners') }}" class="{{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
                         <span>🖼️ হিরো ব্যানার (Hero Banners)</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.stories.index') }}" class="{{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.stories.index') ? route('admin.stories.index') : url('/admin/stories') }}" class="{{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
                         <span>💕 সাফল্যের গল্প (Stories)</span>
                     </a>
                 </li>
@@ -147,12 +147,12 @@
                 <!-- GENERAL MANAGEMENT -->
                 <li class="nav-section-title">⚙️ GENERAL</li>
                 <li>
-                    <a href="{{ route('admin.biodatas.index') }}" class="{{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.biodatas.index') ? route('admin.biodatas.index') : url('/admin/biodatas') }}" class="{{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
                         <span>📜 বায়োডাটা ব্যবস্থাপনা</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+                    <a href="{{ Route::has('admin.messages.index') ? route('admin.messages.index') : url('/admin/messages') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
                         <span>✉️ কন্টাক্ট মেসেজ</span>
                     </a>
                 </li>

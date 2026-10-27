@@ -178,7 +178,7 @@
                 </div>
 
                 @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.dashboard') }}" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;padding:12px;background:#062820;color:#cba135;border:1.5px solid #cba135;border-radius:12px;text-align:center;font-weight:700;font-size:13px;text-decoration:none">
+                    <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : url('/admin') }}" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;padding:12px;background:#062820;color:#cba135;border:1.5px solid #cba135;border-radius:12px;text-align:center;font-weight:700;font-size:13px;text-decoration:none">
                         🕌 এডমিন প্যানেলে যান (Admin Panel)
                     </a>
                 @endif
@@ -189,13 +189,13 @@
                             <div style="font-size:11px;font-weight:700;color:var(--dash-gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px">
                                 🕌 এডমিন অপশনস (ADMIN PANEL)
                             </div>
-                            <a href="{{ route('admin.dashboard') }}" class="dash-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="background:#062820;color:#cba135;margin-bottom:4px">
+                            <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : url('/admin') }}" class="dash-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="background:#062820;color:#cba135;margin-bottom:4px">
                                 <span class="nav-label"><span class="icon">📊</span> এডমিন ড্যাশবোর্ড</span>
                             </a>
-                            <a href="{{ route('admin.users.index') }}" class="dash-nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.users.index') ? route('admin.users.index') : url('/admin/users') }}" class="dash-nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">👥</span> ইউজার অ্যাকাউন্টস (Users)</span>
                             </a>
-                            <a href="{{ route('admin.requests.index') }}" class="dash-nav-item {{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.requests.index') ? route('admin.requests.index') : url('/admin/user-requests') }}" class="dash-nav-item {{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">📩</span> ইউজার রিকোয়েস্ট (Requests)</span>
                                 @php
                                     $pReqCount = \Illuminate\Support\Facades\Schema::hasTable('user_requests')
@@ -206,19 +206,19 @@
                                     <span class="dash-badge-new" style="background:#dc2626;color:#fff">{{ $pReqCount }}</span>
                                 @endif
                             </a>
-                            <a href="{{ route('admin.plans.index') }}" class="dash-nav-item {{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.plans.index') ? route('admin.plans.index') : url('/admin/plans') }}" class="dash-nav-item {{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">💎</span> সাবস্ক্রিপশন প্ল্যান (Plans)</span>
                             </a>
-                            <a href="{{ route('admin.banners.index') }}" class="dash-nav-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.banners.index') ? route('admin.banners.index') : url('/admin/banners') }}" class="dash-nav-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">🖼️</span> হিরো ব্যানার (Hero Banners)</span>
                             </a>
-                            <a href="{{ route('admin.stories.index') }}" class="dash-nav-item {{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.stories.index') ? route('admin.stories.index') : url('/admin/stories') }}" class="dash-nav-item {{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">💕</span> সাফল্যের গল্প (Stories)</span>
                             </a>
-                            <a href="{{ route('admin.biodatas.index') }}" class="dash-nav-item {{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.biodatas.index') ? route('admin.biodatas.index') : url('/admin/biodatas') }}" class="dash-nav-item {{ request()->routeIs('admin.biodatas.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">📜</span> বায়োডাটা ব্যবস্থাপনা</span>
                             </a>
-                            <a href="{{ route('admin.messages.index') }}" class="dash-nav-item {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+                            <a href="{{ Route::has('admin.messages.index') ? route('admin.messages.index') : url('/admin/messages') }}" class="dash-nav-item {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
                                 <span class="nav-label"><span class="icon">✉️</span> কন্টাক্ট মেসেজ</span>
                             </a>
                         </div>
