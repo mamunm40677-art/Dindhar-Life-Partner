@@ -46,4 +46,3 @@ class HomeController extends Controller
         return view('home', compact('biodatas', 'totalBiodatas', 'groomsCount', 'bridesCount', 'plans', 'heroBanner', 'successStories', 'articles'));
     }
 }
-}
